@@ -43,7 +43,9 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           if current_user
             fields = ["first_name", "last_name", "email"]
             conf = YAML.load_file("#{Rails.root}/config/facebook.yml")[Rails.env]
-            fb_auth = FbGraph::Auth.new(conf["app_id"], conf["client_secret"])
+            app_id = conf["app_id"]
+            app_secret = conf["client_secret"]
+            fb_auth = FbGraph::Auth.new(app_id, app_secret)
             unless cookies[:"fbsr_#{conf['app_id']}"].blank?
               fb_auth.from_cookie(cookies)
               user = fb_auth.user.fetch
