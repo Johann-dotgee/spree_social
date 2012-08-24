@@ -53,7 +53,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
               current_user.city = user.location[0]
               current_user.country = user.location[1]
               fields.each do |info|
-                current_user[:"#{info}"] = user.send(info)
+                current_user[:"\#{info}"] = user.send(info)
               end
             end
           end
