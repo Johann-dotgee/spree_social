@@ -41,7 +41,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           end
 
           if current_user
-            flash[:notice] = "current_user est défini"
+            flash[:notice] = "current_user est defini"
             spree_user = Spree::User.find(current_user.id)
             fields = ["first_name", "last_name", "email"]
             conf = YAML.load_file("#{Rails.root}/config/facebook.yml")[Rails.env]
