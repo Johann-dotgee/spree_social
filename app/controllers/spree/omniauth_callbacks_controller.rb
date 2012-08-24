@@ -41,7 +41,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           end
 
           if current_user
-            user = User.find(current_user.id)
+            user = Spree::User.find(current_user.id)
             fields = ["first_name", "last_name", "email"]
             conf = YAML.load_file("#{Rails.root}/config/facebook.yml")[Rails.env]
             app_id = conf["app_id"]
