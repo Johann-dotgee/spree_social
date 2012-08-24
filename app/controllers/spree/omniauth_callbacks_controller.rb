@@ -51,8 +51,8 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
               fb_auth.from_cookie(cookies)
               user = fb_auth.user.fetch
               user.location = user.location.name.split(',')
-              current_user.city = user.location[0]
-              current_user.country = user.location[1]
+              spree_user.city = user.location[0]
+              spree_user.country = user.location[1]
               fields.each do |info|
                 if spree_user.send(info).nil?
                   spree_user[:"\#{info}"] = user.send(info)
