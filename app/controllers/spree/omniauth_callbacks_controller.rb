@@ -46,7 +46,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             app_id = conf["app_id"]
             app_secret = conf["client_secret"]
             fb_auth = FbGraph::Auth.new(app_id, app_secret)
-            unless cookies[:"fbsr_#{conf['app_id']}"].blank?
+            unless cookies[:"fbsr_#{app_id}"].blank?
               fb_auth.from_cookie(cookies)
               user = fb_auth.user.fetch
               user.location = user.location.name.split(',')
