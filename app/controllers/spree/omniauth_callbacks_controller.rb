@@ -39,6 +39,22 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             current_order.associate_user!(user)
             session[:guest_token] = nil
           end
+
+          if current_user
+            fields = ["first_name", "last_name", "email"]
+            conf = YAML.load_file("#{Rails.root}/config/facebook.yml")[Rails.env]
+            fb_auth = FbGraph::Auth.new(conf["app_id"], conf["client_secret"])
+            unless cookies[:"fbsr_#{conf['app_id']}"].blank?
+              fb_auth.from_cookie(cookies)
+              user = fb_auth.user.fetch
+              user.location = user.location.name.split(',')
+              current_user.city = user.location[0]
+              current_user.country = user.location[1]
+              fields.each do |info|
+                current_user[:"#{info}"] = user.send(info)
+              end
+            end
+          end
         end
       }
     end
