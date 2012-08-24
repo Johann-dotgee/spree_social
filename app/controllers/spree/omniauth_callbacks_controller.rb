@@ -58,7 +58,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                   spree_user[:"\#{info}"] = user.send(info)
                 end
               end
-              user.save
+              spree_user.save
             end
           end
         end
